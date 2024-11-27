@@ -1,8 +1,12 @@
-export type CardData = {
+export type ResponseGetData = {
   id: string;
-  urlComplete: string;
-  daysToExpire: number;
-  urlShorty: string;
+  url_complete: string;
+  days_to_expire: number;
+  short_id: string;
+};
+
+export type CardData = Omit<ResponseGetData, "short_id"> & {
+  url_shorty: string;
 };
 
 export type SupabaseCard = {
@@ -20,4 +24,4 @@ type returnFunctionFetch = {
   short_id: string;
 };
 
-export type ResponseGetAll = { message: string; data: Array<CardData> };
+export type ResponseGetAll = { message: string; data: Array<ResponseGetData> };

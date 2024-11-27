@@ -1,4 +1,4 @@
-import { CardData, ResponseGetAll } from "@/types";
+import { CardData, ResponseGetAll, ResponseGetData } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -13,7 +13,21 @@ export async function fetchAllUrls(): Promise<CardData[]> {
   }
 
   const { data }: ResponseGetAll = await resp.json();
-  return data;
+  // Mutando el data
+  const mutedData: Array<CardData> = data.map(
+    ({
+      id,
+      days_to_expire,
+      short_id,
+      url_complete,
+    }: ResponseGetData): CardData => ({
+      id,
+      url_complete,
+      days_to_expire,
+      url_shorty: `${window.location.origin}/${short_id}`,
+    })
+  );
+  return mutedData;
 }
 
 export function getDaysToExpire(expires_at: string) {

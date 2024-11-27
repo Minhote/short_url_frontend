@@ -9,25 +9,27 @@ import {
 import { CardData } from "@/types";
 
 export default function LINKCARD({
-  daysToExpire,
-  urlComplete,
-  urlShorty,
+  days_to_expire,
+  url_complete,
+  url_shorty,
 }: Omit<CardData, "id">) {
-  if (daysToExpire > 0) {
+  if (days_to_expire > 0) {
     return (
       <Card className="w-64">
         <CardHeader className="w-6 overflow-hidden whitespace-nowrap">
           <CardTitle>Url Complete</CardTitle>
           <CardDescription className="overflow-ellipsis">
-            {urlComplete}
+            {url_complete}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <h2>URL Shorty</h2>
-          <p>{urlShorty}</p>
+          <a href={url_shorty} target="_blank">
+            {url_shorty}
+          </a>
         </CardContent>
         <CardFooter>
-          <p>Dias restantes para que expire : {daysToExpire}</p>
+          <p>Dias restantes para que expire : {days_to_expire}</p>
         </CardFooter>
       </Card>
     );

@@ -31,6 +31,7 @@ export default function CardContextProvider({
     const fetchData = async () => {
       try {
         const data = await fetchAllUrls();
+        console.log(data);
         setCardData(data);
       } catch (error) {
         console.error(`Error en la peticion App: ${error}`);

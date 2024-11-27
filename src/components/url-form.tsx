@@ -27,7 +27,7 @@ const urlFormSchema = z.object({
 
 export function URLForm() {
   const [disabled, setDisabled] = useState(false);
-  const { data, setData } = useURLS();
+  const { setData } = useURLS();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof urlFormSchema>>({
@@ -63,13 +63,13 @@ export function URLForm() {
         // Sacar el dias por expirar
         const daysToExpire = getDaysToExpire(expires_at);
 
-        setData([
-          ...data,
+        setData((prevData) => [
+          ...prevData,
           {
             id,
-            urlComplete: original_url,
-            urlShorty: `${window.location.origin}/${short_id}`,
-            daysToExpire,
+            url_complete: original_url,
+            url_shorty: `${window.location.origin}/${short_id}`,
+            days_to_expire: daysToExpire,
           },
         ]);
 
