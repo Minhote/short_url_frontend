@@ -3,20 +3,19 @@ import { useURLS } from "@/context/cards-context";
 
 export default function CardsWrapper() {
   const { data } = useURLS();
-
-  return (
-    <div className="flex justify-between flex-wrap gap-2 items-center">
-      {data.map(({ id, days_to_expire, url_complete, url_shorty }) => {
-        return (
-          // Modificar esteticamente esta cards
-          <LINKCARD
-            key={id}
-            days_to_expire={days_to_expire}
-            url_complete={url_complete}
-            url_shorty={url_shorty}
-          ></LINKCARD>
-        );
-      })}
-    </div>
-  );
+  if (data.length > 0)
+    return (
+      <div className="cards_grid px-20 py-10 bg-background">
+        {data.map(({ id, days_to_expire, url_complete, url_shorty }) => {
+          return (
+            <LINKCARD
+              key={id}
+              days_to_expire={days_to_expire}
+              url_complete={url_complete}
+              url_shorty={url_shorty}
+            />
+          );
+        })}
+      </div>
+    );
 }

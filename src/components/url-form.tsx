@@ -85,10 +85,12 @@ export function URLForm() {
         loading: "Loading .....",
         success: (data) => {
           setDisabled(false);
+          form.reset();
           return `Link acortado: ${window.location.origin}/${data.short_id}`;
         },
         error: (error) => {
           setDisabled(false);
+          form.reset();
           return `${error.message}`;
         },
       });
@@ -105,7 +107,9 @@ export function URLForm() {
           name="url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Url</FormLabel>
+              <FormLabel className="font-semibold text-base text-txt dark:text-background">
+                Url
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="url here"
