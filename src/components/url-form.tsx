@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
-import { returnFunctionFetch, SupabaseCard } from "@/types";
+import { ResponseSaveUrl, returnFunctionFetch } from "@/types";
 import { useURLS } from "@/context/cards-context";
 import { getDaysToExpire } from "@/lib/utils";
 
@@ -57,9 +57,9 @@ export function URLForm() {
             `Error en la solicitud: ${f.status} - ${f.statusText}`
           );
         }
-        const resp: SupabaseCard = await f.json();
+        const resp: ResponseSaveUrl = await f.json();
 
-        const { short_id, original_url, id, expires_at } = resp;
+        const { short_id, original_url, id, expires_at, short_url } = resp;
         // Sacar el dias por expirar
         const daysToExpire = getDaysToExpire(expires_at);
 
@@ -68,8 +68,9 @@ export function URLForm() {
           {
             id,
             url_complete: original_url,
-            url_shorty: `${window.location.origin}/${short_id}`,
             days_to_expire: daysToExpire,
+            short_id,
+            short_url,
           },
         ]);
 
@@ -77,7 +78,7 @@ export function URLForm() {
         return {
           success: "true",
           message: "Link Guardado y acortado con exito",
-          short_id,
+          short_url,
         };
       };
 
@@ -86,7 +87,7 @@ export function URLForm() {
         success: (data) => {
           setDisabled(false);
           form.reset();
-          return `Link acortado: ${window.location.origin}/${data.short_id}`;
+          return `Link acortado: ${data.short_url}`;
         },
         error: (error) => {
           setDisabled(false);

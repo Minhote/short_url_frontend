@@ -6,16 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CardData } from "@/types";
+import { ResponseGetData } from "@/types";
 import { RefreshCcw } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function LINKCARD({
   days_to_expire,
   url_complete,
-  url_shorty,
-}: Omit<CardData, "id">) {
-  console.log(days_to_expire);
+  short_url,
+}: Omit<ResponseGetData, "id">) {
   if (days_to_expire > 0) {
     // Estilizar las cards y su wrapper
     return (
@@ -31,11 +30,11 @@ export default function LINKCARD({
         <CardContent className="my-2">
           <h2 className="font-semibold text-txt text-xl">URL Shorty</h2>
           <a
-            href={url_shorty}
+            href={`${short_url}`}
             target="_blank"
             className="underline text-txt-500"
           >
-            {url_shorty}
+            {short_url}
           </a>
         </CardContent>
         <CardFooter>
@@ -60,19 +59,26 @@ export default function LINKCARD({
         <CardContent className="my-2">
           <h2 className="font-semibold text-txt text-xl">URL Shorty</h2>
           <a
-            href={url_shorty}
+            href={`${short_url}`}
             target="_blank"
             className="underline text-txt-500"
           >
-            {url_shorty}
+            {short_url}
           </a>
         </CardContent>
         <CardFooter className="justify-between">
           <p className="font-medium text-sm text-txt">
             Expirado: (Click para restaurar)
           </p>
-          <Button variant="ghost" size="icon" className="hover:bg-transparent">
-            <RefreshCcw width={20} height={20} className="text-txt" />
+          <Button
+            asChild
+            variant="ghost"
+            size="icon"
+            className="hover:bg-transparent"
+          >
+            <a href="http://localhost:3000/urls/bfrId" target="_blank">
+              <RefreshCcw width={20} height={20} className="text-txt" />
+            </a>
           </Button>
         </CardFooter>
       </Card>

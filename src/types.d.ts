@@ -3,10 +3,7 @@ export type ResponseGetData = {
   url_complete: string;
   days_to_expire: number;
   short_id: string;
-};
-
-export type CardData = Omit<ResponseGetData, "short_id"> & {
-  url_shorty: string;
+  short_url: string;
 };
 
 export type SupabaseCard = {
@@ -18,10 +15,16 @@ export type SupabaseCard = {
   clicks: number;
 };
 
+export type ResponseSaveUrl = SupabaseCard & {
+  short_url: string;
+};
+
 type returnFunctionFetch = {
   success: string;
   message: string;
-  short_id: string;
+  short_url: string;
 };
 
 export type ResponseGetAll = { message: string; data: Array<ResponseGetData> };
+
+export type RedirectParams = Omit<returnFunctionFetch, "success" | "message">;

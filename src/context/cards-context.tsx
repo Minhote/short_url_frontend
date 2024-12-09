@@ -1,5 +1,5 @@
 import { fetchAllUrls } from "@/lib/utils";
-import { CardData } from "@/types";
+import { ResponseGetData } from "@/types";
 import React, {
   createContext,
   ReactNode,
@@ -9,8 +9,8 @@ import React, {
 } from "react";
 
 type CardDataState = {
-  data: CardData[];
-  setData: React.Dispatch<React.SetStateAction<CardData[]>>;
+  data: ResponseGetData[];
+  setData: React.Dispatch<React.SetStateAction<ResponseGetData[]>>;
 };
 
 const initialData: CardDataState = {
@@ -25,7 +25,7 @@ export default function CardContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [cardData, setCardData] = useState<CardData[]>([]);
+  const [cardData, setCardData] = useState<ResponseGetData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
