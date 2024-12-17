@@ -16,6 +16,24 @@ export async function fetchAllUrls(): Promise<ResponseGetData[]> {
   return data;
 }
 
+export async function updateUrlById(id: string) {
+  const resp = await fetch(`http://localhost:3000/urls/update`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ short_id: id }),
+  });
+
+  if (!resp.ok) {
+    throw new Error("Error en la actualización de fecha de expiración");
+  }
+
+  const { data } = await resp.json();
+
+  return data;
+}
+
 export function getDaysToExpire(expires_at: string) {
   const now = new Date();
   const expire = new Date(expires_at);

@@ -1,4 +1,4 @@
-import { fetchAllUrls } from "@/lib/utils";
+import { fetchAllUrls, updateUrlById } from "@/lib/utils";
 import { ResponseGetData } from "@/types";
 import React, {
   createContext,
@@ -11,11 +11,13 @@ import React, {
 type CardDataState = {
   data: ResponseGetData[];
   setData: React.Dispatch<React.SetStateAction<ResponseGetData[]>>;
+  updateExpirationTimeById: (id: string) => Promise<void>;
 };
 
 const initialData: CardDataState = {
   data: [],
   setData: () => null,
+  updateExpirationTimeById: async () => {},
 };
 
 const CardContext = createContext<CardDataState>(initialData);
@@ -27,11 +29,26 @@ export default function CardContextProvider({
 }) {
   const [cardData, setCardData] = useState<ResponseGetData[]>([]);
 
+  const updateExpirationTimeById = async (id: string) => {
+    try {
+      const updatedData = await updateUrlById(id);
+      setCardData((prev) => {
+        const newData = prev.map((item) =>
+          item.id === updatedData.id ? updatedData : item
+        );
+        return newData;
+      });
+    } catch (error) {
+      console.error(
+        `Error en la actualización de fecha de expiración: ${error}`
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchAllUrls();
-        console.log(data);
         setCardData(data);
       } catch (error) {
         console.error(`Error en la peticion App: ${error}`);
@@ -43,6 +60,7 @@ export default function CardContextProvider({
   const value: CardDataState = {
     data: cardData,
     setData: setCardData,
+    updateExpirationTimeById: updateExpirationTimeById,
   };
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
 }
