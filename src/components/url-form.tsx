@@ -19,7 +19,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ResponseSaveUrl, returnFunctionFetch } from "@/types";
 import { useURLS } from "@/context/cards-context";
-import { getDaysToExpire } from "@/lib/utils";
+import { apiUrl, getDaysToExpire } from "@/lib/utils";
 
 const urlFormSchema = z.object({
   url: z.string().url({ message: "Invalid URL" }),
@@ -44,7 +44,7 @@ export function URLForm() {
       const fecthSaver = async (
         values: Record<string, string>
       ): Promise<returnFunctionFetch> => {
-        const f = await fetch("http://localhost:3000/urls/save", {
+        const f = await fetch(`${apiUrl}/urls/save`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

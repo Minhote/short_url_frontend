@@ -2,12 +2,17 @@ import { ResponseGetAll, ResponseGetData } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export const apiUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://short-url-backend-8807.onrender.com"
+    : "http://localhost:3000";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export async function fetchAllUrls(): Promise<ResponseGetData[]> {
-  const resp = await fetch("http://localhost:3000/urls");
+  const resp = await fetch(`${apiUrl}/urls`);
   if (!resp.ok) {
     throw new Error("Error en la petición de las url");
   }
@@ -17,7 +22,7 @@ export async function fetchAllUrls(): Promise<ResponseGetData[]> {
 }
 
 export async function updateUrlById(id: string) {
-  const resp = await fetch(`http://localhost:3000/urls/update`, {
+  const resp = await fetch(`${apiUrl}/urls/update`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
